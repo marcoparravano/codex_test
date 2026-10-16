@@ -127,6 +127,7 @@
     if (!state) return;
     const snapshot = clone(state);
     let localBackupSaved = false;
+    let databaseSaved = false;
     try {
       localStorage.setItem(LOCAL_KEY, JSON.stringify(snapshot));
       localBackupSaved = true;
@@ -136,6 +137,7 @@
     if (db) {
       try {
         await dbRequest("readwrite", store => store.put(snapshot, "state"));
+        databaseSaved = true;
       } catch (error) {
         console.error("Tournament data could not be saved to IndexedDB:", error);
         if (!localBackupSaved) toast("Could not save changes. Export a backup before leaving.");
@@ -145,6 +147,7 @@
     if (!localBackupSaved) toast(db ? "Local database saved; browser backup could not be updated." : "Could not save changes. Export a backup before leaving.");
     const stamp = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
     document.getElementById("saved-at").textContent = `Saved at ${stamp}`;
+    return localBackupSaved || databaseSaved;
   }
 
   function queueSave() {
@@ -416,6 +419,8 @@
           <div class="notice">Auto-save runs after each change and when the app is closed. Your data stays in this browser and isn't uploaded to a server.</div>
           <div class="backup-actions"><button class="button button-quiet" data-action="export">↓ Export tournament backup</button><button class="button button-quiet" data-action="restore">↑ Restore from backup</button><button class="button button-quiet" data-action="install" id="install-button" hidden>＋ Install app</button></div>
           <p>Invite links open the tournament on this device. Use Export backup to share a portable copy of tournament data.</p>
+          <div class="notice">Reset removes all tournament details, players, teams, groups, and matches from this device.</div>
+          <button class="button button-danger" data-action="reset">Reset tournament data</button>
         </div></div>`;
   }
 
@@ -721,6 +726,31 @@
     document.getElementById("restore-file").click();
   }
 
+  async function resetTournament() {
+    if (!window.confirm("Permanently clear all tournament details, players, teams, groups, and matches from this device? This cannot be undone.")) return;
+    clearTimeout(saveTimer);
+    state = {
+      tournament: {
+        name: "",
+        venue: "",
+        startDate: "",
+        endDate: "",
+        courts: 4,
+        format: "Groups + knockout",
+        groupCount: 2,
+        description: ""
+      },
+      players: [],
+      teams: [],
+      groups: [],
+      matches: [],
+      page: "overview"
+    };
+    const saved = await persist();
+    render();
+    if (saved) toast("All tournament data has been reset.");
+  }
+
   async function importBackup(file) {
     if (!file) return;
     try {
@@ -831,6 +861,7 @@
     else if (action === "share") shareInvite();
     else if (action === "export") exportBackup();
     else if (action === "restore") restoreBackup();
+    else if (action === "reset") resetTournament();
     else if (action === "install") installApp();
     else if (action === "close-modal") modal.close();
   });

@@ -4,7 +4,7 @@ Rally is a dependency-free, mobile-first padel tournament manager. Open `index.h
 
 ## Tournament data
 
-Tournament data is stored locally in IndexedDB, with a localStorage backup. Changes are saved as they happen and again when the app is backgrounded or closed. Use **Settings → Export tournament backup** to move data between devices, and **Restore from backup** to load a JSON export. There is no account or cloud synchronization: a shared invite contains event details and the app link, but does not synchronize edits or player registrations across devices.
+Tournament data is stored locally in IndexedDB, with a localStorage backup. Changes are saved as they happen and again when the app is backgrounded or closed. Use **Settings → Export tournament backup** to move data between devices, **Restore from backup** to load a JSON export, or **Reset tournament data** to clear all event details, players, teams, groups, and matches from this device. There is no account or cloud synchronization: a shared invite contains event details and the app link, but does not synchronize edits or player registrations across devices.
 
 The static web app can be packaged for Android and iOS with Capacitor. For shared, multi-device tournament data in a native release, add a backend/synchronization service; a native SQLite adapter can also be added if native database management is required.
 
