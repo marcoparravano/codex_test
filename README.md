@@ -1,6 +1,6 @@
-# Rally
+# ApPadel
 
-Rally is a dependency-free, mobile-first padel tournament manager. Open `index.html` to use it in a browser. To enable install prompts and offline app-shell caching, serve the folder over HTTPS (or localhost); those browser features are not available from a `file://` URL.
+ApPadel is a dependency-free, mobile-first padel tournament manager. Open `index.html` to use it in a browser. To enable install prompts and offline app-shell caching, serve the folder over HTTPS (or localhost); those browser features are not available from a `file://` URL.
 
 ## Tournament data
 

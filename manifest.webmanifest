@@ -1,6 +1,6 @@
 {
-  "name": "Rally — Padel Tournament Manager",
-  "short_name": "Rally",
+  "name": "ApPadel — Padel Tournament Manager",
+  "short_name": "ApPadel",
   "description": "Plan, schedule and run your padel tournament.",
   "start_url": "./",
   "display": "standalone",

@@ -712,7 +712,7 @@
   }
 
   function exportBackup() {
-    const payload = { app: "Rally Padel", schemaVersion: 1, exportedAt: new Date().toISOString(), data: state };
+    const payload = { app: "ApPadel", schemaVersion: 1, exportedAt: new Date().toISOString(), data: state };
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
@@ -757,7 +757,7 @@
       const parsed = JSON.parse(await file.text());
       const candidate = parsed.data || parsed;
       if (!candidate || !candidate.tournament || !Array.isArray(candidate.players) || !Array.isArray(candidate.teams) || !Array.isArray(candidate.groups) || !Array.isArray(candidate.matches)) {
-        throw new Error("This file does not contain a valid Rally tournament backup.");
+        throw new Error("This file does not contain a valid ApPadel tournament backup.");
       }
       if (!window.confirm("Replace this device's current tournament with the backup?")) return;
       state = normalizeState(candidate);
@@ -824,11 +824,11 @@
       const button = document.getElementById("install-button");
       if (button) button.hidden = false;
     });
-    window.addEventListener("appinstalled", () => toast("Rally is installed on your device."));
+    window.addEventListener("appinstalled", () => toast("ApPadel is installed on your device."));
   }
 
   async function installApp() {
-    if (!installPrompt) { toast("Use your browser menu to add Rally to your home screen."); return; }
+    if (!installPrompt) { toast("Use your browser menu to add ApPadel to your home screen."); return; }
     installPrompt.prompt();
     await installPrompt.userChoice;
     installPrompt = null;
