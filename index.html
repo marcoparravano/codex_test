@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f4f6f2">
+    <meta name="description" content="A better way to run your padel tournament.">
+    <title>Rally — Padel tournament manager</title>
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#" aria-label="Rally home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none"><rect x="3" y="3" width="30" height="30" rx="11" fill="currentColor"/><path d="M12 24V12h6.7a4.3 4.3 0 0 1 1.9 8.15L24 24m-8-4h3" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="brand-name">rally<span>.</span></span>
+        </a>
+        <div class="workspace-label">YOUR CLUB</div>
+        <button class="club-switcher" type="button"><span class="club-avatar">N</span><span class="club-copy"><strong>Northside Padel</strong><small>Community club</small></span><span class="chevron">⌄</span></button>
+        <div class="workspace-label nav-label">TOURNAMENT</div>
+        <nav class="main-nav" aria-label="Main navigation">
+          <button class="nav-item active" data-page="overview"><span class="nav-icon">⌂</span><span>Overview</span></button>
+          <button class="nav-item" data-page="players"><span class="nav-icon">♙</span><span>Players</span><span class="nav-count" id="player-count">0</span></button>
+          <button class="nav-item" data-page="teams"><span class="nav-icon">♧</span><span>Teams</span><span class="nav-count" id="team-count">0</span></button>
+          <button class="nav-item" data-page="groups"><span class="nav-icon">▦</span><span>Groups</span></button>
+          <button class="nav-item" data-page="schedule"><span class="nav-icon">▤</span><span>Schedule</span></button>
+          <button class="nav-item" data-page="bracket"><span class="nav-icon">⌘</span><span>Knockout</span></button>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="storage-status"><span class="status-dot"></span><span><strong>Saved on this device</strong><small id="saved-at">Just now</small></span></div>
+          <button class="nav-item" data-page="settings"><span class="nav-icon">⚙</span><span>Settings</span></button>
+          <div class="profile-row"><span class="profile-avatar">MC</span><span class="profile-copy"><strong>Marco C.</strong><small>Tournament admin</small></span><button class="dots-button" aria-label="Profile menu">···</button></div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <button class="mobile-menu" id="mobile-menu" aria-label="Open navigation">☰</button>
+          <div class="breadcrumb"><span>Northside Padel</span><span class="crumb-slash">/</span><strong id="page-breadcrumb">Overview</strong></div>
+          <div class="topbar-actions"><span class="sync-indicator"><span class="status-dot"></span>All changes saved</span><button class="button button-quiet button-small" id="share-top">↗ <span>Invite players</span></button><button class="avatar-small">MC</button></div>
+        </header>
+        <div class="page-wrap" id="app"></div>
+      </main>
+    </div>
+    <div class="toast-region" id="toast-region" aria-live="polite"></div>
+    <dialog id="modal" class="modal"><div id="modal-content"></div></dialog>
+    <input type="file" id="restore-file" accept=".json,application/json" hidden>
+    <script src="./app.js" defer></script>
+    <script>
+      if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(error => console.error('Offline support could not be enabled:', error)));
+    </script>
+  </body>
+</html>
